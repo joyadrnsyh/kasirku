@@ -1,83 +1,102 @@
-// ProductCard.tsx
+import React from "react";
+import { Star } from "lucide-react";
 
-import React from 'react';
-import { Star } from 'lucide-react'; // Menggunakan ikon bintang dari 'lucide-react' (asumsi library ikon ini tersedia)
-
-// Mendefinisikan tipe untuk props
 interface ProductCardProps {
   title: string;
-  subtitle?: string; // Subtitle bersifat opsional
+  subtitle?: string;
   imageSrc: string;
-  isLarge?: boolean; // Jadikan opsional, defaultnya false
-  rating?: number; // Tambahkan rating bersifat opsional
+  rating?: number;
+  price?: number;
+  onBuy?: () => void;
+  children?: React.ReactNode;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ title, subtitle, imageSrc, isLarge = false, rating }) => {
-  
-  // Kelas dinamis berdasarkan ukuran kartu
-  const cardClasses = isLarge ? 'h-96 w-full' : 'h-64 w-full';
-  const titleClasses = isLarge ? 'text-4xl' : 'text-3xl';
-  const subtitleClasses = isLarge ? 'text-lg' : 'text-sm';
-
-  // Fungsi untuk menampilkan bintang rating
-  const renderRating = (rate: number) => {
-    // Membuat array untuk 5 bintang
-    const stars = Array.from({ length: 5 }, (_, index) => {
-      // Tentukan apakah bintang harus diisi penuh atau tidak
-      const isFilled = index < Math.floor(rate);
-      return (
+const ProductCard: React.FC<ProductCardProps> = ({
+  title,
+  subtitle,
+  imageSrc,
+  rating = 0,
+  price,
+  onBuy,
+  children,
+}) => {
+  const renderRating = (rate: number) => (
+    <div className="flex items-center gap-1 mt-1 opacity-80">
+      {Array.from({ length: 5 }).map((_, idx) => (
         <Star
-          key={index}
-          className={`w-4 h-4 ${isFilled ? 'text-yellow-400 fill-yellow-400' : 'text-gray-400'}`}
+          key={idx}
+          className={`w-4 h-4 ${
+            idx < Math.floor(rate)
+              ? "text-black fill-black"
+              : "text-gray-300"
+          }`}
         />
-      );
-    });
-    
-    return (
-      <div className="flex items-center gap-1 mt-1">
-        {stars}
-        <span className="text-xs ml-1 font-medium text-gray-200">({rate.toFixed(1)})</span>
-      </div>
-    );
-  };
-  
+      ))}
+      <span className="text-xs ml-1 text-gray-600">
+        ({rate.toFixed(1)})
+      </span>
+    </div>
+  );
+
   return (
-    <div className={`relative ${cardClasses} rounded-2xl overflow-hidden shadow-xl bg-gray-100`}>
-      
-      {/* Container Gambar dan Gradien */}
-      <div className="absolute inset-0">
-        <img 
-          src={imageSrc} 
-          alt={title} 
-          className="w-full h-full object-cover" 
+    <div className="relative w-full rounded-xl overflow-hidden bg-white shadow-sm 
+      hover:shadow-md transition-all duration-300 flex flex-col border border-gray-200">
+
+      {/* IMAGE */}
+      <div className="w-full h-[340px] overflow-hidden bg-gray-100">
+        <img
+          src={imageSrc}
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          onError={(e) => {
+            e.currentTarget.src = "/image/default-fallback.png";
+          }}
         />
-        {/* Gradien untuk memastikan teks terlihat jelas */}
-        {/* Mengubah gradien agar lebih gelap di bagian bawah untuk rating/teks */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div> 
-      </div>
-      
-      {/* Ikon Panah/Link (tombol expand/link) */}
-      <div className="absolute top-4 right-4 bg-white/30 backdrop-blur-sm p-3 rounded-full cursor-pointer hover:bg-white/50 transition duration-300">
-        {/* Mengubah warna ikon menjadi putih/hitam agar kontras, tergantung latar belakang */}
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 text-white">
-          <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 4.5 15 15m0 0V8.25m0 11.25H8.25" />
-        </svg>
       </div>
 
-      {/* Konten Teks */}
-      <div className={`absolute left-5 ${isLarge ? 'bottom-5' : 'bottom-4'} text-white`}>
-        <h2 className={`font-light ${titleClasses}`}>{title}</h2>
-        
-        {/* Menampilkan Subtitle (jika ada) */}
-        {subtitle && (
-          <p className={`mt-1 font-extralight ${subtitleClasses} text-gray-200`}>
-            {subtitle}
-          </p>
-        )}
+      {/* CONTENT */}
+      <div className="p-4 flex flex-col flex-1 justify-between">
+        <div>
+          <h2 className="text-lg font-semibold text-gray-900 tracking-wide">
+            {title}
+          </h2>
 
-        {/* Menampilkan Rating Bintang (jika ada) */}
-        {rating !== undefined && rating > 0 && renderRating(rating)}
-        
+          {subtitle && (
+            <p className="text-gray-500 text-sm mt-1 tracking-wide">
+              {subtitle}
+            </p>
+          )}
+
+          {/* RATING */}
+          {(rating > 0 && rating <= 5) ? (
+            renderRating(rating)
+          ) : (
+            <div className="h-5 mt-1"></div>
+          )}
+
+          {/* PRICE */}
+          {price !== undefined && (
+            <p className="text-xl font-semibold text-gray-800 mt-3">
+              Rp {Math.round(price).toLocaleString("id-ID")}
+            </p>
+          )}
+        </div>
+
+        {/* BUTTON AREA */}
+        <div className="mt-4">
+          {children ? (
+            <div className="flex gap-2">{children}</div>
+          ) : onBuy ? (
+            <button
+              onClick={onBuy}
+              className="w-full bg-black hover:bg-gray-900 text-white py-2 px-4 rounded-md transition-all"
+            >
+              Beli Sekarang
+            </button>
+          ) : (
+            <div className="h-10"></div>
+          )}
+        </div>
       </div>
     </div>
   );

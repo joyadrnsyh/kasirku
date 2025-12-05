@@ -1,14 +1,15 @@
-import { title } from "@/components/primitives";
 import DefaultLayout from "@/layouts/default";
 
-export default function DocsPage() {
+export default function About() {
   return (
     <DefaultLayout>
-      <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-        <div className="inline-block max-w-lg text-center justify-center">
-          <h1 className={title()}>About</h1>
-        </div>
-      </section>
+      <div className="container mx-auto px-4 py-20">
+        <h1 className="text-4xl font-bold mb-4">About</h1>
+        <p className="text-lg text-default-500">
+          Ini adalah halaman About. Sesuaikan konten ini dengan informasi toko,
+          misi, kontak, atau apa pun yang Anda inginkan.
+        </p>
+      </div>
     </DefaultLayout>
   );
 }

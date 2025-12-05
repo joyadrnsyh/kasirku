@@ -56,7 +56,7 @@ export const Navbar = () => {
   );
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky" className="h-20 p-10">
+    <HeroUINavbar maxWidth="xl" position="sticky" className="h-20 p-10 top-0 z-50" isBlurred>
       
       {/* LEFT SECTION */}
       <NavbarContent
@@ -64,8 +64,8 @@ export const Navbar = () => {
         className="basis-1/5 sm:basis-full items-center"
       >
         <NavbarBrand>
-          <Link href="/" className="font-bold text-inherit">
-            GlowVera
+          <Link href="/" className="font-bold text-lg text-biru-600 font-lato">
+            YourBaju.id
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -78,7 +78,7 @@ export const Navbar = () => {
             // PRODUCTS DROPDOWN MENU
            if (item.label === "Products") {
             return (
-              <Dropdown key="products">
+              <Dropdown key="produk">
                 <DropdownTrigger>
                   <Button
                     variant="light"

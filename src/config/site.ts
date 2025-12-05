@@ -14,7 +14,7 @@ export const siteConfig = {
       label: "Products",
       href: "/products",
       dropdown: [
-      { label: "Skincare", href: "/products/skincare" },
+      { label: "Semua Produk", href: "/produk/semuaproduk" },
       { label: "Makeup", href: "/products/makeup" },
       { label: "Bodycare", href: "/products/bodycare" },
       { label: "Haircare", href: "/products/haircare" },

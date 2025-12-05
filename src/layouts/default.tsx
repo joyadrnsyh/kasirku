@@ -1,29 +1,45 @@
-import { Link } from "@heroui/link";
-
+import React, { useEffect } from "react"; // Tambahkan React import eksplisit
 import { Navbar } from "@/components/navbar";
+import {Provider} from "@/provider";
+import Footer from "@/components/footer";
+
+
+interface DefaultLayoutProps {
+  children: React.ReactNode;
+  title?: string; // Judul bisa dikustom per halaman
+}
 
 export default function DefaultLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+  // Menggunakan default prop dari parameter destructuring
+  title = "yourBaju.id - Premium Fashion for Everyday Confidence", 
+}: DefaultLayoutProps) {
+  
+  // Set judul dokumen ketika komponen dimuat atau 'title' berubah
+  useEffect(() => {
+    // Pastikan kita berada di sisi klien (browser) sebelum mengakses 'document'
+    if (typeof document !== 'undefined') {
+      document.title = title;
+    }
+  }, [title]);
+
   return (
-    <div className="relative flex flex-col h-screen">
-      <Navbar />
+    // Kontainer utama: memastikan tinggi minimal 100% viewport
+    <div className="relative flex flex-col min-h-screen bg-pink-50"> 
+      
+      {/* Navbar di atas */}
+      <Navbar /> 
+
+      {/* Konten Utama (Main Content) */}
+      {/* pt-16 memberi padding atas agar konten tidak tertutup Navbar fixed (asumsi Navbar tingginya ~64px atau h-16) */}
       <main className="container mx-auto max-w-7xl px-6 flex-grow pt-16">
-        {children}
+                <Provider>
+                {children}
+                </Provider>
+
       </main>
-      <footer className="w-full flex items-center justify-center py-3">
-        <Link
-          isExternal
-          className="flex items-center gap-1 text-current"
-          href="https://heroui.com"
-          title="heroui.com homepage"
-        >
-          <span className="text-default-600">Powered by</span>
-          <p className="text-primary">HeroUI</p>
-        </Link>
-      </footer>
+    <Footer />
+    
     </div>
   );
 }
