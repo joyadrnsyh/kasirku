@@ -1,10 +1,8 @@
 import { Button } from "@heroui/button";
-import { Kbd } from "@heroui/kbd";
 import { Link } from "@heroui/link";
 import { Input } from "@heroui/input";
 import { ChevronDown } from "lucide-react";
-import {Avatar} from "@heroui/react";
-
+import { Avatar } from "@heroui/react";
 
 import {
   Navbar as HeroUINavbar,
@@ -13,140 +11,139 @@ import {
   NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
-  NavbarMenuItem
+  NavbarMenuItem,
 } from "@heroui/navbar";
 
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from "@heroui/dropdown";
 
-import { link as linkStyles } from "@heroui/theme";
-import clsx from "clsx";
-
 import { siteConfig } from "@/config/site";
-
-import {
-  SearchIcon
-} from "@/components/icons";
+import { SearchIcon } from "@/components/icons";
 
 export const Navbar = () => {
-  // Search input box
   const searchInput = (
     <Input
       aria-label="Search"
       classNames={{
-        inputWrapper: "bg-default-100",
+        inputWrapper: "bg-neutral-100 border border-neutral-300 shadow-none",
         input: "text-sm",
       }}
-      endContent={
-        <Kbd className="hidden lg:inline-block" keys={["command"]}>
-          K
-        </Kbd>
-      }
-      labelPlacement="outside"
       placeholder="Search..."
       startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+        <SearchIcon className="text-base text-neutral-500 pointer-events-none" />
       }
       type="search"
     />
   );
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky" className="h-20 p-10 top-0 z-50" isBlurred>
-      
-      {/* LEFT SECTION */}
-      <NavbarContent
-        justify="start"
-        className="basis-1/5 sm:basis-full items-center"
-      >
+    <HeroUINavbar
+      maxWidth="xl"
+      position="sticky"
+      className="bg-white border-b border-neutral-200 h-20 z-[999]"
+    >
+      {/* LEFT - BRAND */}
+      <NavbarContent justify="start" className="basis-1/5 sm:basis-full">
         <NavbarBrand>
-          <Link href="/" className="font-bold text-lg text-biru-600 font-lato">
-            YourBaju.id
+          <Link
+            href="/"
+            className="font-extrabold text-2xl tracking-tight text-black"
+          >
+            YOURBAJU.ID
           </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      {/* RIGHT SECTION */}
-      <NavbarContent justify="end" className="hidden sm:flex gap-6">
-              {/* Desktop Navigation */}
-        <div className="hidden lg:flex gap-6 items-center">
-          {siteConfig.navItems.map((item: any) => {
-            // PRODUCTS DROPDOWN MENU
-           if (item.label === "Products") {
+      {/* MID - DESKTOP MENU */}
+      <NavbarContent justify="center" className="hidden lg:flex gap-8">
+        {siteConfig.navItems.map((item: any) => {
+          if (item.dropdown) {
             return (
-              <Dropdown key="produk">
+              <Dropdown key={item.label} placement="bottom-start">
                 <DropdownTrigger>
                   <Button
                     variant="light"
                     disableRipple
-                    className="h-auto px-0 py-0 bg-transparent text-foreground data-[hover=true]:bg-transparent data-[focus=true]:bg-transparent text-md justify-items-center"
+                    className="uppercase text-sm font-semibold tracking-wide text-black hover:text-neutral-600 bg-transparent px-0 data-[hover=true]:bg-transparent"
                   >
-                    Products
+                    {item.label}
                     <ChevronDown size={16} />
                   </Button>
                 </DropdownTrigger>
 
-                <DropdownMenu aria-label="Products">
-                  {item.dropdown?.map((sub: any) => (
+                <DropdownMenu
+                  aria-label={item.label}
+                  className="rounded-none shadow-md border border-neutral-200 bg-white"
+                >
+                  {item.dropdown.map((sub: any) => (
                     <DropdownItem key={sub.href}>
-                      <Link href={sub.href}>{sub.label}</Link>
+                      <Link
+                        href={sub.href}
+                        className="text-sm text-neutral-700 hover:text-black"
+                      >
+                        {sub.label}
+                      </Link>
                     </DropdownItem>
                   ))}
                 </DropdownMenu>
               </Dropdown>
             );
-}
-            // NORMAL MENU ITEMS
-            return (
-              <NavbarItem key={item.href}>
-                <Link
-                  className={clsx(
-                    linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary"
-                  )}
-                  href={item.href}
-                >
-                  {item.label}
-                </Link>
-              </NavbarItem>
-            );
-          })}
-        </div>
-        <NavbarItem className="hidden lg:flex">
-          {searchInput}
-        </NavbarItem>
+          }
 
-        <div className="flex gap-4 items-center">
-          <Avatar isBordered color="danger" src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
-        </div>
-
+          return (
+            <NavbarItem key={item.href}>
+              <Link
+                href={item.href}
+                className="uppercase text-sm font-semibold tracking-wide text-black hover:text-neutral-600"
+              >
+                {item.label}
+              </Link>
+            </NavbarItem>
+          );
+        })}
       </NavbarContent>
 
-      {/* MOBILE BURGER TOGGLE */}
-      <NavbarContent justify="end" className="sm:hidden">
+      {/* RIGHT */}
+      <NavbarContent
+        justify="end"
+        className="hidden lg:flex gap-6 items-center"
+      >
+        {searchInput}
+
+        <Avatar
+          isBordered
+          color="default"
+          radius="sm"
+          src="https://i.pravatar.cc/150?u=a04258114e29026708c"
+        />
+      </NavbarContent>
+
+      {/* MOBILE TOGGLE */}
+      <NavbarContent justify="end" className="lg:hidden">
         <NavbarMenuToggle />
       </NavbarContent>
 
       {/* MOBILE MENU */}
-      <NavbarMenu>
-        {searchInput}
+      <NavbarMenu className="bg-white">
+        <div className="px-4 py-3">{searchInput}</div>
 
         {siteConfig.navItems.map((item: any) => (
           <NavbarMenuItem key={item.label}>
-
             {item.dropdown ? (
               <details className="group">
-                <summary className="cursor-pointer text-lg">{item.label}</summary>
+                <summary className="cursor-pointer text-lg font-semibold uppercase">
+                  {item.label}
+                </summary>
                 <div className="ml-4 mt-2 flex flex-col gap-2">
                   {item.dropdown.map((sub: any) => (
                     <Link
                       key={sub.href}
                       href={sub.href}
-                      className="text-default-500"
+                      className="text-neutral-600 text-sm"
                     >
                       {sub.label}
                     </Link>
@@ -154,13 +151,16 @@ export const Navbar = () => {
                 </div>
               </details>
             ) : (
-              <Link href={item.href}>{item.label}</Link>
+              <Link
+                href={item.href}
+                className="text-lg font-semibold uppercase text-black"
+              >
+                {item.label}
+              </Link>
             )}
-
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
-
     </HeroUINavbar>
   );
 };

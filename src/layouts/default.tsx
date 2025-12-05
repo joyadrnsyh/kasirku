@@ -1,45 +1,41 @@
-import React, { useEffect } from "react"; // Tambahkan React import eksplisit
+import React, { useEffect } from "react";
 import { Navbar } from "@/components/navbar";
-import {Provider} from "@/provider";
+import { Provider } from "@/provider";
 import Footer from "@/components/footer";
-
 
 interface DefaultLayoutProps {
   children: React.ReactNode;
-  title?: string; // Judul bisa dikustom per halaman
+  title?: string;
 }
 
 export default function DefaultLayout({
   children,
-  // Menggunakan default prop dari parameter destructuring
-  title = "yourBaju.id - Premium Fashion for Everyday Confidence", 
+  title = "yourBaju.id - Premium Fashion for Everyday Confidence",
 }: DefaultLayoutProps) {
-  
-  // Set judul dokumen ketika komponen dimuat atau 'title' berubah
+
   useEffect(() => {
-    // Pastikan kita berada di sisi klien (browser) sebelum mengakses 'document'
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       document.title = title;
     }
   }, [title]);
 
   return (
-    // Kontainer utama: memastikan tinggi minimal 100% viewport
-    <div className="relative flex flex-col min-h-screen bg-pink-50"> 
-      
-      {/* Navbar di atas */}
-      <Navbar /> 
+    <div className="flex flex-col min-h-screen bg-neutral-50 text-neutral-900">
 
-      {/* Konten Utama (Main Content) */}
-      {/* pt-16 memberi padding atas agar konten tidak tertutup Navbar fixed (asumsi Navbar tingginya ~64px atau h-16) */}
-      <main className="container mx-auto max-w-7xl px-6 flex-grow pt-16">
-                <Provider>
-                {children}
-                </Provider>
+      {/* Navbar */}
+      <Navbar />
 
-      </main>
-    <Footer />
-    
+      {/* Main Content */}
+      <Provider>
+        <main className="flex-grow pt-20 pb-10">
+          <div className="mx-auto max-w-7xl px-6">
+            {children}
+          </div>
+        </main>
+      </Provider>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

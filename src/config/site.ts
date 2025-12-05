@@ -2,88 +2,72 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "GlowVera",
-  description: "Premium cosmetic e-commerce built with HeroUI.",
+  description: "Minimalist fashion e-commerce inspired by Japanese style.",
 
-  // MENU UTAMA (tanpa dropdown)
+  // ===========================
+  // NAVIGATION (DESKTOP)
+  // ===========================
   navItems: [
     {
       label: "Home",
       href: "/",
     },
     {
-      label: "Products",
-      href: "/products",
+      label: "Shop",
+      href: "/shop",
       dropdown: [
-      { label: "Semua Produk", href: "/produk/semuaproduk" },
-      { label: "Makeup", href: "/products/makeup" },
-      { label: "Bodycare", href: "/products/bodycare" },
-      { label: "Haircare", href: "/products/haircare" },
-    ],
+        { label: "Men", href: "/shop/men" },
+        { label: "Women", href: "/shop/women" },
+        { label: "Kids", href: "/shop/kids" },
+        { label: "New Arrivals", href: "/shop/new" },
+        { label: "Best Sellers", href: "/shop/bestseller" },
+        { label: "Sale", href: "/shop/sale" },
+      ],
     },
     {
-      label: "Pricing",
-      href: "/pricing",
-    },
-    {
-      label: "Blog",
-      href: "/blog",
+      label: "Collections",
+      href: "/collections",
+      dropdown: [
+        { label: "Essentials", href: "/collections/essentials" },
+        { label: "Japanese Minimalist", href: "/collections/japanese" },
+        { label: "Premium Cotton", href: "/collections/cotton" },
+        { label: "Winter Collection", href: "/collections/winter" },
+        { label: "Summer Wear", href: "/collections/summer" },
+      ],
     },
     {
       label: "About",
       href: "/about",
     },
+    {
+      label: "Contact",
+      href: "/contact",
+    },
   ],
 
-  // DROPDOWN PRODUCTS (dipakai di navbar)
-  products: [
-    { label: "Skincare", href: "/products/skincare" },
-    { label: "Makeup", href: "/products/makeup" },
-    { label: "Bodycare", href: "/products/bodycare" },
-    { label: "Haircare", href: "/products/haircare" },
-  ],
-
-  // NAV MENU (mobile)
+  // ===========================
+  // NAVIGATION (MOBILE MENU)
+  // ===========================
   navMenuItems: [
-    {
-      label: "Profile",
-      href: "/profile",
-    },
-    {
-      label: "Dashboard",
-      href: "/dashboard",
-    },
-    {
-      label: "Projects",
-      href: "/projects",
-    },
-    {
-      label: "Team",
-      href: "/team",
-    },
-    {
-      label: "Calendar",
-      href: "/calendar",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
-    },
-    {
-      label: "Logout",
-      href: "/logout",
-    },
+    { label: "Home", href: "/" },
+    { label: "Shop - Men", href: "/shop/men" },
+    { label: "Shop - Women", href: "/shop/women" },
+    { label: "Shop - Kids", href: "/shop/kids" },
+    { label: "New Arrivals", href: "/shop/new" },
+    { label: "Best Sellers", href: "/shop/bestseller" },
+    { label: "Sale", href: "/shop/sale" },
+    { label: "Collections", href: "/collections" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
   ],
 
-  // LINKS SOSIAL
+  // ===========================
+  // SOCIAL LINKS
+  // ===========================
   links: {
-    github: "https://github.com/heroui-inc/heroui",
-    twitter: "https://twitter.com/hero_ui",
+    github: "https://github.com/",
+    twitter: "https://twitter.com/",
+    instagram: "https://instagram.com/",
     docs: "https://heroui.com",
-    discord: "https://discord.gg/9b6yyZKmH4",
-    sponsor: "https://patreon.com/jrgarciadev",
   },
 };
