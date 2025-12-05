@@ -2,7 +2,6 @@ import DefaultLayout from "@/layouts/default";
 import { useEffect, useState, useMemo } from "react";
 import ProductCard from "@/components/productcart";
 import productService from "@/services/productService";
-import { Button as HButton } from "@heroui/react";
 import { addToast } from "@heroui/toast";
 
 interface Product {
@@ -23,14 +22,14 @@ export default function SemuaProduk() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 🔍 Search & Filter
+  // Search & Filter
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
 
-  // ↕ Sorting
+  // Sorting
   const [sort, setSort] = useState("default");
 
-  // Ambil semua produk
+  // Fetch API
   useEffect(() => {
     productService
       .getAllProducts()
@@ -39,6 +38,7 @@ export default function SemuaProduk() {
       .finally(() => setLoading(false));
   }, []);
 
+  // Toasts
   const handleAddToCart = (title: string) => {
     addToast({
       title: "Keranjang 🛒",
@@ -57,29 +57,26 @@ export default function SemuaProduk() {
     });
   };
 
-  // Ambil kategori unik
+  // Unique categories
   const categories = useMemo(() => {
     const catSet = new Set(products.map((p) => p.category.name));
     return ["all", ...Array.from(catSet)];
   }, [products]);
 
-  // Filter + Search + Sort
+  // Search + Filter + Sort
   const filteredProducts = useMemo(() => {
     let list = [...products];
 
-    // Search
     if (search.trim() !== "") {
       list = list.filter((p) =>
         p.title.toLowerCase().includes(search.toLowerCase())
       );
     }
 
-    // Filter kategori
     if (category !== "all") {
       list = list.filter((p) => p.category.name === category);
     }
 
-    // Sorting
     if (sort === "price_low") {
       list.sort((a, b) => a.price - b.price);
     } else if (sort === "price_high") {
@@ -93,7 +90,7 @@ export default function SemuaProduk() {
     return list;
   }, [products, search, category, sort]);
 
-  // Skeleton simple style Uniqlo
+  // Skeleton Loading
   const Skeleton = () => (
     <div className="animate-pulse border border-neutral-300 bg-white rounded-xl h-[330px]">
       <div className="bg-neutral-200 h-44 rounded-t-xl"></div>
@@ -107,14 +104,13 @@ export default function SemuaProduk() {
   return (
     <DefaultLayout title="Semua Produk — yourBaju.id">
       <div className="container mx-auto px-4 py-10">
-        {/* TITLE */}
         <h1 className="text-3xl font-semibold text-center tracking-tight mb-10">
           Semua Produk
         </h1>
 
         {/* FILTER BAR */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-10">
-          {/* Search */}
+          {/* SEARCH */}
           <input
             type="text"
             placeholder="Search products..."
@@ -125,7 +121,7 @@ export default function SemuaProduk() {
           />
 
           <div className="flex gap-3">
-            {/* Dropdown Kategori */}
+            {/* CATEGORY */}
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -139,7 +135,7 @@ export default function SemuaProduk() {
               ))}
             </select>
 
-            {/* Sorting */}
+            {/* SORT */}
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
@@ -155,49 +151,31 @@ export default function SemuaProduk() {
           </div>
         </div>
 
-        {/* LIST PRODUK */}
+        {/* PRODUCT LIST */}
         {loading ? (
-          // Loading skeleton
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
               <Skeleton key={i} />
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          // Empty state
           <p className="text-center text-neutral-500 text-lg mt-20">
             Produk tidak ditemukan.
           </p>
         ) : (
-          // Render product
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredProducts.map((product) => (
               <ProductCard
                 key={product.id}
+                id={product.id}
                 title={product.title}
                 subtitle={product.category.name}
                 imageSrc={product.images[0] || "/image/default.png"}
                 rating={4}
                 price={Math.round(product.price * 15000)}
-              >
-                <HButton
-                  variant="solid"
-                  color="default"
-                  className="flex-1 bg-black text-white rounded-none h-12 tracking-wide"
-                  onPress={() => handleAddToCart(product.title)}
-                >
-                  ADD TO CART
-                </HButton>
-
-                <HButton
-                  variant="bordered"
-                  color="default"
-                  className="flex-1 border-black text-black rounded-none h-12 tracking-wide"
-                  onPress={() => handleBuy(product.title)}
-                >
-                  BUY NOW
-                </HButton>
-              </ProductCard>
+                onAddToCart={() => handleAddToCart(product.title)}
+                onBuy={() => handleBuy(product.title)}
+              />
             ))}
           </div>
         )}

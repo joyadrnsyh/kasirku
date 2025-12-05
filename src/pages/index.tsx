@@ -2,9 +2,9 @@ import DefaultLayout from "@/layouts/default";
 import HeroSection from "@/components/herosection";
 import ProductCard from "@/components/productcart";
 import productService from "@/services/productService";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { addToast } from "@heroui/toast";
-import { Button as HButton } from "@heroui/react";
+import { CartContext } from "@/context/CartContext";
 
 interface Product {
   id: number;
@@ -27,10 +27,13 @@ export default function IndexPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const { addToCart } = useContext(CartContext);
+
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
       setError(null);
+
       try {
         const data = await productService.getAllProducts();
         setProducts(data);
@@ -46,13 +49,22 @@ export default function IndexPage() {
         setLoading(false);
       }
     };
+
     fetchProducts();
   }, []);
 
-  const handleAddToCart = (title: string) => {
+  const handleAddToCart = (product: Product) => {
+    // Tambahkan produk ke cart
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: Math.round(product.price * IDR_EXCHANGE_RATE),
+      images: product.images,
+    });
+
     addToast({
       title: "Keranjang 🛒",
-      description: `Produk ${title} telah ditambahkan.`,
+      description: `Produk ${product.title} telah ditambahkan.`,
       variant: "flat",
       color: "success",
     });
@@ -78,40 +90,24 @@ export default function IndexPage() {
     list.map((product) => (
       <ProductCard
         key={product.id}
+        id={product.id}
         title={product.title}
         subtitle={product.category.name}
         imageSrc={product.images[0] || "/image/default.png"}
         price={Math.round(product.price * IDR_EXCHANGE_RATE)}
         rating={4.5}
-      >
-        <HButton
-          variant="solid"
-          color="default"
-          className="flex-1 bg-black text-white rounded-none h-12 tracking-wide"
-          onPress={() => handleAddToCart(product.title)}
-        >
-          ADD TO CART
-        </HButton>
-
-        <HButton
-          variant="bordered"
-          color="default"
-          className="flex-1 border-black text-black rounded-none h-12 tracking-wide"
-          onPress={() => handleBuy(product.title)}
-        >
-          BUY NOW
-        </HButton>
-      </ProductCard>
+        onAddToCart={() => handleAddToCart(product)}
+        onBuy={() => handleBuy(product.title)}
+      />
     ));
 
   return (
     <DefaultLayout>
-      {/* HERO SECTION */}
       <section className="px-6 md:px-10 mt-10">
         <HeroSection />
       </section>
 
-      {/* RECOMMENDED SECTION */}
+      {/* RECOMMENDED */}
       <section className="mt-28 px-6 md:px-10">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-14 tracking-tight">
           RECOMMENDED FOR YOU

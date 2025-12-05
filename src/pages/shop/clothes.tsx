@@ -2,6 +2,7 @@ import DefaultLayout from "@/layouts/default";
 import { useEffect, useState } from "react";
 import ProductCard from "@/components/productcart";
 import productService from "@/services/productService";
+import { addToast } from "@heroui/toast";
 
 interface Product {
   id: number;
@@ -25,7 +26,6 @@ export default function ClothesProducts() {
     productService
       .getAllProducts()
       .then((data) => {
-        // ⬅ Filter kategori di sini
         const filtered = data.filter(
           (p: Product) => p.category?.name === "Clothes"
         );
@@ -35,8 +35,22 @@ export default function ClothesProducts() {
       .finally(() => setLoading(false));
   }, []);
 
+  const handleAddToCart = (title: string) => {
+    addToast({
+      title: "Keranjang 🛒",
+      description: `Produk ${title} telah ditambahkan.`,
+      variant: "flat",
+      color: "success",
+    });
+  };
+
   const handleBuy = (title: string) => {
-    alert(`Anda membeli produk: ${title}`);
+    addToast({
+      title: "Pembelian Berhasil 🎉",
+      description: `Produk ${title} telah diproses.`,
+      variant: "flat",
+      color: "success",
+    });
   };
 
   return (
@@ -50,17 +64,23 @@ export default function ClothesProducts() {
           </h1>
 
           {products.length === 0 ? (
-            <p className="text-center text-default-500">Tidak ada produk Clothes.</p>
+            <p className="text-center text-default-500">
+              Tidak ada produk Clothes.
+            </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
+                  id={product.id}
                   title={product.title}
                   subtitle={product.category.name}
-                  imageSrc={product.images?.[0] || "/default.jpg"}
-                  rating={0}
+                  imageSrc={
+                    product.images?.[0] || "/image/default-fallback.png"
+                  }
+                  rating={4}
                   price={Math.round(product.price * 15000)}
+                  onAddToCart={() => handleAddToCart(product.title)}
                   onBuy={() => handleBuy(product.title)}
                 />
               ))}

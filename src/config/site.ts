@@ -43,6 +43,10 @@ export const siteConfig = {
       label: "Contact",
       href: "/contact",
     },
+    {
+      label: "Cart",
+      href: "/cart",
+    },
   ],
 
   // ===========================
