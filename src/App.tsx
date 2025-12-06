@@ -10,6 +10,7 @@ import CartPage from "@/pages/Cart";
 import CheckoutPage from "@/pages/Checkout";
 import OrdersPage from "@/pages/Orders";
 import ProductDetailPage from "./pages/ProductDetailPage";
+
 function App() {
   return (
     <Routes>

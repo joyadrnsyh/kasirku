@@ -62,7 +62,7 @@ export const Navbar = () => {
             href="/"
             className="font-extrabold text-2xl tracking-tight text-black"
           >
-            YOURBAJU.ID
+            byuheart.
           </Link>
         </NavbarBrand>
       </NavbarContent>
