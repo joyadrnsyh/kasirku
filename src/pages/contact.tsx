@@ -98,7 +98,7 @@ export default function ContactPage() {
 
           <div className="w-full h-[400px] mt-10 border border-neutral-300">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18..."
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6777.606427081932!2d110.37396778338716!3d-7.82730975877346!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a57a7b80d5957%3A0x119b0fcaefe41db6!2sRumah%20Sakit%20Umum%20Daerah%20(RSUD)%20Kota%20Yogyakarta!5e0!3m2!1sen!2sid!4v1764985961905!5m2!1sen!2sid"
               className="w-full h-full"
               loading="lazy"
               style={{ border: 0 }}

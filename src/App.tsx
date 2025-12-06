@@ -9,7 +9,7 @@ import NotFound from "@/pages/404";
 import CartPage from "@/pages/Cart";
 import CheckoutPage from "@/pages/Checkout";
 import OrdersPage from "@/pages/Orders";
-
+import ProductDetailPage from "./pages/ProductDetailPage";
 function App() {
   return (
     <Routes>
@@ -23,6 +23,7 @@ function App() {
       <Route element={<OrdersPage />} path="/orders" />
       <Route element={<NotFound />} path="*" />
       <Route element={<SemuaProduk />} path="/shop/sale" />
+      <Route element={<ProductDetailPage />} path="/product/:id" />
     </Routes>
   );
 }

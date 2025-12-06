@@ -11,12 +11,7 @@ interface Product {
   title: string;
   price: number;
   description: string;
-  category: {
-    id: number;
-    name: string;
-    image: string;
-    slug: string;
-  };
+  category: { id: number; name: string; image: string; slug: string };
   images: string[];
 }
 
@@ -33,10 +28,12 @@ export default function IndexPage() {
     const fetchProducts = async () => {
       setLoading(true);
       setError(null);
-
       try {
         const data = await productService.getAllProducts();
         setProducts(data);
+
+        // Simpan ke localStorage agar bisa diakses di ProductDetailPage
+        localStorage.setItem("products", JSON.stringify(data));
       } catch (err) {
         setError("Gagal memuat produk.");
         addToast({
@@ -54,7 +51,6 @@ export default function IndexPage() {
   }, []);
 
   const handleAddToCart = (product: Product) => {
-    // Tambahkan produk ke cart
     addToCart({
       id: product.id,
       title: product.title,

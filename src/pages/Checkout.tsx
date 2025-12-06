@@ -1,21 +1,28 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext, CartItem } from "@/context/CartContext";
 import DefaultLayout from "@/layouts/default";
-import { useState } from "react";
+import { ToastContext } from "@/components/ToastProvider";
+import { AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutPage() {
-  const { cart, updateQty, clearCart } = useContext(CartContext);
+  const { cart, updateQty, clearCart, addOrder } = useContext(CartContext);
+  const { addToast } = useContext(ToastContext);
+  const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
   const [address, setAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("credit_card");
 
-  // Hitung total
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const handleSubmit = () => {
     if (!fullName || !address) {
-      alert("Please fill in your name and address.");
+      addToast({
+        title: "Form Incomplete ❌",
+        description: "Please fill in your name and address.",
+        type: "error",
+      });
       return;
     }
 
@@ -26,9 +33,20 @@ export default function CheckoutPage() {
       total,
     };
 
-    localStorage.setItem("orders", JSON.stringify(order));
+    // Tambahkan order ke context agar CartPage bisa menampilkan di tab Pesanan
+    addOrder(order);
+
+    // Kosongkan keranjang
     clearCart();
-    alert("Order placed successfully!");
+
+    addToast({
+      title: "Order Placed 🎉",
+      description: "Your order has been successfully placed!",
+      type: "success",
+    });
+
+    // Redirect ke halaman cart agar user bisa melihat pesanan
+    navigate("/cart");
   };
 
   const increment = (item: CartItem) => updateQty(item.id, item.qty + 1);
@@ -37,7 +55,7 @@ export default function CheckoutPage() {
 
   return (
     <DefaultLayout>
-      <div className="max-w-5xl mx-auto py-16 px-6">
+      <div className="max-w-5xl mx-auto py-16 px-6 relative">
         <h1 className="text-4xl font-bold mb-10 text-center tracking-tight">
           Checkout
         </h1>
@@ -172,6 +190,8 @@ export default function CheckoutPage() {
             </section>
           </div>
         )}
+
+        <AnimatePresence />
       </div>
     </DefaultLayout>
   );

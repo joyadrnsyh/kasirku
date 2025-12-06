@@ -8,51 +8,92 @@ export interface CartItem {
   qty: number;
 }
 
+export interface Order {
+  id: number;
+  items: CartItem[];
+  total: number;
+  customer: { name: string; address: string };
+  paymentMethod: string;
+  date: string;
+  status: "pending" | "completed";
+}
+
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Omit<CartItem, "qty">, qty?: number) => void;
+  cartItems: CartItem[];
+  orders: Order[];
+  addToCart: (product: Omit<CartItem, "qty">) => void;
   removeFromCart: (id: number) => void;
-  clearCart: () => void;
   updateQty: (id: number, qty: number) => void;
+  clearCart: () => void;
+  addOrder: (order: Omit<Order, "id" | "date" | "status">) => void;
+  markOrderCompleted: (orderId: number) => void;
 }
 
 export const CartContext = createContext<CartContextType>({
   cart: [],
+  cartItems: [],
+  orders: [],
   addToCart: () => {},
   removeFromCart: () => {},
-  clearCart: () => {},
   updateQty: () => {},
+  clearCart: () => {},
+  addOrder: () => {},
+  markOrderCompleted: () => {},
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
-  const addToCart = (product: Omit<CartItem, "qty">, qty: number = 1) => {
+  const addToCart = (product: Omit<CartItem, "qty">) => {
     const exist = cart.find((p) => p.id === product.id);
-
     if (exist) {
       setCart(
-        cart.map((p) => (p.id === product.id ? { ...p, qty: p.qty + qty } : p))
+        cart.map((p) => (p.id === product.id ? { ...p, qty: p.qty + 1 } : p))
       );
     } else {
-      setCart([...cart, { ...product, qty }]);
+      setCart([...cart, { ...product, qty: 1 }]);
     }
   };
 
-  const removeFromCart = (id: number) => {
+  const removeFromCart = (id: number) =>
     setCart(cart.filter((item) => item.id !== id));
-  };
+
+  const updateQty = (id: number, qty: number) =>
+    setCart(cart.map((item) => (item.id === id ? { ...item, qty } : item)));
 
   const clearCart = () => setCart([]);
 
-  const updateQty = (id: number, qty: number) => {
-    if (qty < 1) return; // Minimal qty = 1
-    setCart(cart.map((item) => (item.id === id ? { ...item, qty } : item)));
+  const addOrder = (order: Omit<Order, "id" | "date" | "status">) => {
+    const newOrder: Order = {
+      ...order,
+      id: Date.now(),
+      date: new Date().toISOString(),
+      status: "pending",
+    };
+    setOrders((prev) => [...prev, newOrder]);
+  };
+
+  const markOrderCompleted = (orderId: number) => {
+    setOrders((prev) =>
+      prev.map((o) => (o.id === orderId ? { ...o, status: "completed" } : o))
+    );
   };
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart, updateQty }}
+      value={{
+        cart,
+        cartItems: cart,
+        orders,
+        addToCart,
+        removeFromCart,
+        updateQty,
+        clearCart,
+        addOrder,
+        markOrderCompleted,
+      }}
     >
       {children}
     </CartContext.Provider>

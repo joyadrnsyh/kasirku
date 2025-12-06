@@ -1,5 +1,6 @@
 import React from "react";
 import { Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface ProductCardProps {
   id: number;
@@ -39,10 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   );
 
   return (
-    <div
-      className="relative w-full rounded-xl overflow-hidden bg-white shadow-sm 
-        hover:shadow-md transition-all duration-300 flex flex-col border border-gray-200"
-    >
+    <div className="relative w-full rounded-xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-all duration-300 flex flex-col border border-gray-200">
       {/* IMAGE */}
       <div className="w-full h-[340px] overflow-hidden bg-gray-100">
         <img
@@ -58,9 +56,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
       {/* CONTENT */}
       <div className="p-4 flex flex-col flex-1 justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 tracking-wide">
-            {title}
-          </h2>
+          {/* NAMA PRODUK DIBUNGKUS LINK */}
+          <Link to={`/product/${id}`}>
+            <h2 className="text-lg font-semibold text-gray-900 tracking-wide hover:underline">
+              {title}
+            </h2>
+          </Link>
 
           <p className="text-gray-500 text-sm mt-1 tracking-wide">{subtitle}</p>
 

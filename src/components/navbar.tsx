@@ -1,7 +1,7 @@
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { Input } from "@heroui/input";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ShoppingCart } from "lucide-react";
 import { Avatar } from "@heroui/react";
 
 import {
@@ -21,10 +21,19 @@ import {
   DropdownItem,
 } from "@heroui/dropdown";
 
+import { useContext } from "react";
+import { CartContext } from "@/context/CartContext";
 import { siteConfig } from "@/config/site";
 import { SearchIcon } from "@/components/icons";
 
 export const Navbar = () => {
+  const { cartItems } = useContext(CartContext);
+
+  const totalCartItems = cartItems.reduce(
+    (acc: number, item: { qty: number }) => acc + item.qty,
+    0
+  );
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -114,10 +123,20 @@ export const Navbar = () => {
       >
         {searchInput}
 
+        {/* Cart Button */}
+        <Link href="/cart" className="relative">
+          <ShoppingCart size={24} className="text-black" />
+          {totalCartItems > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+              {totalCartItems}
+            </span>
+          )}
+        </Link>
+
         <Avatar
           isBordered
           color="default"
-          radius="sm"
+          className="h-10 w-10 rounded-full"
           src="https://i.pravatar.cc/150?u=a04258114e29026708c"
         />
       </NavbarContent>
@@ -160,6 +179,19 @@ export const Navbar = () => {
             )}
           </NavbarMenuItem>
         ))}
+
+        {/* Mobile Cart */}
+        <NavbarMenuItem>
+          <Link href="/cart" className="relative flex items-center gap-2">
+            <ShoppingCart size={20} />
+            <span>Cart</span>
+            {totalCartItems > 0 && (
+              <span className="ml-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                {totalCartItems}
+              </span>
+            )}
+          </Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </HeroUINavbar>
   );

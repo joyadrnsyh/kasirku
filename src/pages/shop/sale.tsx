@@ -1,96 +1,139 @@
 import DefaultLayout from "@/layouts/default";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useContext } from "react";
 import ProductCard from "@/components/productcart";
-import productService from "@/services/productService";
 import { addToast } from "@heroui/toast";
+import { CartContext } from "@/context/CartContext";
 
 interface Product {
   id: number;
   title: string;
   price: number;
   description: string;
-  category: {
-    id: number;
-    name: string;
-    image: string;
-    slug: string;
-  };
+  category: { name: string };
   images: string[];
 }
 
+const IDR_EXCHANGE_RATE = 15000;
+const ITEMS_PER_PAGE = 10;
+
 export default function SemuaProduk() {
+  const { addToCart } = useContext(CartContext);
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Search & Filter
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("all");
-
-  // Sorting
   const [sort, setSort] = useState("default");
 
-  // Fetch API
   useEffect(() => {
-    productService
-      .getAllProducts()
-      .then((data) => setProducts(data))
-      .catch((err) => console.error("Error fetching products:", err))
-      .finally(() => setLoading(false));
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        // API 1
+        const res1 = await fetch("https://dummyjson.com/products");
+        const data1 = await res1.json();
+        const api1Products: Product[] = data1.products.map((p: any) => ({
+          id: p.id,
+          title: p.title,
+          price: p.price,
+          description: p.description,
+          category: { name: p.category },
+          images: p.images,
+        }));
+
+        // API 2
+        const res2 = await fetch("https://fakestoreapi.com/products");
+        const data2 = await res2.json();
+        const api2Products: Product[] = data2.map((p: any) => ({
+          id: 1000 + p.id,
+          title: p.title,
+          price: p.price,
+          description: p.description,
+          category: { name: p.category },
+          images: [p.image],
+        }));
+
+        setProducts([...api1Products, ...api2Products]);
+      } catch (err) {
+        console.error(err);
+        addToast({
+          title: "Error ❌",
+          description: "Gagal memuat daftar produk.",
+          variant: "flat",
+          color: "danger",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
-  // Toasts
-  const handleAddToCart = (title: string) => {
-    addToast({
-      title: "Keranjang 🛒",
-      description: `Produk ${title} telah ditambahkan.`,
-      variant: "flat",
-      color: "success",
-    });
-  };
-
-  const handleBuy = (title: string) => {
-    addToast({
-      title: "Pembelian Berhasil 🎉",
-      description: `Produk ${title} telah diproses.`,
-      variant: "flat",
-      color: "success",
-    });
-  };
-
-  // Unique categories
   const categories = useMemo(() => {
     const catSet = new Set(products.map((p) => p.category.name));
     return ["all", ...Array.from(catSet)];
   }, [products]);
 
-  // Search + Filter + Sort
   const filteredProducts = useMemo(() => {
     let list = [...products];
 
-    if (search.trim() !== "") {
+    if (search.trim())
       list = list.filter((p) =>
         p.title.toLowerCase().includes(search.toLowerCase())
       );
-    }
 
-    if (category !== "all") {
+    if (category !== "all")
       list = list.filter((p) => p.category.name === category);
-    }
 
-    if (sort === "price_low") {
-      list.sort((a, b) => a.price - b.price);
-    } else if (sort === "price_high") {
-      list.sort((a, b) => b.price - a.price);
-    } else if (sort === "az") {
-      list.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (sort === "za") {
-      list.sort((a, b) => b.title.localeCompare(a.title));
-    }
+    if (sort === "price_low") list.sort((a, b) => a.price - b.price);
+    else if (sort === "price_high") list.sort((a, b) => b.price - a.price);
+    else if (sort === "az") list.sort((a, b) => a.title.localeCompare(b.title));
+    else if (sort === "za") list.sort((a, b) => b.title.localeCompare(a.title));
 
     return list;
   }, [products, search, category, sort]);
 
-  // Skeleton Loading
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredProducts, currentPage]);
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: Math.round(product.price * IDR_EXCHANGE_RATE),
+      images: product.images,
+    });
+
+    addToast({
+      title: "Keranjang 🛒",
+      description: `Produk ${product.title} telah ditambahkan.`,
+      variant: "flat",
+      color: "success",
+    });
+  };
+
+  const handleBuy = (product: Product) => {
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: Math.round(product.price * IDR_EXCHANGE_RATE),
+      images: product.images,
+    });
+
+    addToast({
+      title: "Pembelian Berhasil 🎉",
+      description: `Produk ${product.title} telah diproses.`,
+      variant: "flat",
+      color: "success",
+    });
+  };
+
   const Skeleton = () => (
     <div className="animate-pulse border border-neutral-300 bg-white rounded-xl h-[330px]">
       <div className="bg-neutral-200 h-44 rounded-t-xl"></div>
@@ -110,21 +153,24 @@ export default function SemuaProduk() {
 
         {/* FILTER BAR */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-10">
-          {/* SEARCH */}
           <input
             type="text"
             placeholder="Search products..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
             className="border border-neutral-300 px-4 py-2 rounded-md w-full md:w-1/3
               focus:outline-none focus:ring-1 focus:ring-black"
           />
-
           <div className="flex gap-3">
-            {/* CATEGORY */}
             <select
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                setCurrentPage(1);
+              }}
               className="border border-neutral-300 px-3 py-2 rounded-md 
                 focus:outline-none focus:ring-1 focus:ring-black"
             >
@@ -135,7 +181,6 @@ export default function SemuaProduk() {
               ))}
             </select>
 
-            {/* SORT */}
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value)}
@@ -163,21 +208,42 @@ export default function SemuaProduk() {
             Produk tidak ditemukan.
           </p>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                title={product.title}
-                subtitle={product.category.name}
-                imageSrc={product.images[0] || "/image/default.png"}
-                rating={4}
-                price={Math.round(product.price * 15000)}
-                onAddToCart={() => handleAddToCart(product.title)}
-                onBuy={() => handleBuy(product.title)}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {paginatedProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  title={product.title}
+                  subtitle={product.category.name}
+                  imageSrc={product.images[0] || "/image/default.png"}
+                  rating={4}
+                  price={Math.round(product.price * IDR_EXCHANGE_RATE)}
+                  onAddToCart={() => handleAddToCart(product)}
+                  onBuy={() => handleBuy(product)}
+                />
+              ))}
+            </div>
+
+            {/* PAGINATION */}
+            {totalPages > 1 && (
+              <div className="flex justify-center mt-8 gap-2">
+                {Array.from({ length: totalPages }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`px-4 py-2 border rounded ${
+                      currentPage === i + 1
+                        ? "bg-black text-white"
+                        : "bg-white text-black"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </DefaultLayout>
