@@ -10,7 +10,7 @@ interface DefaultLayoutProps {
 
 export default function DefaultLayout({
   children,
-  title = "byuheart - Your Trusted E-commerce Platform",
+  title = "byuheart - Platform E-commerce Terpercaya Anda",
 }: DefaultLayoutProps) {
   useEffect(() => {
     if (typeof document !== "undefined") {

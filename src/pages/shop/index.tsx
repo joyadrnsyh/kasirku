@@ -17,7 +17,7 @@ interface Product {
 
 const IDR_EXCHANGE_RATE = 15000;
 
-export default function ShopSalePage() {
+export default function ShopPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,11 +31,9 @@ export default function ShopSalePage() {
       setError(null);
       try {
         const data = await productService.getAllProducts();
-        // Filter products with a discount of 15% or more
-        // Platzi API has no discount, just take a slice for demo
-        setProducts(data.slice(10, 22));
+        setProducts(data);
       } catch (err) {
-        setError("Gagal memuat produk diskon.");
+        setError("Gagal memuat produk.");
       } finally {
         setLoading(false);
       }
@@ -74,14 +72,14 @@ export default function ShopSalePage() {
   );
 
   return (
-    <DefaultLayout title="Toko | Diskon">
+    <DefaultLayout title="Toko | Semua Produk">
       <section className="px-6 md:px-10 mt-10 mb-20">
         <div className="text-center mb-14">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Penawaran Diskon
+            Semua Produk
           </h1>
           <p className="mt-4 text-lg text-neutral-600 max-w-2xl mx-auto">
-            Dapatkan produk favorit Anda dengan harga spesial.
+            Jelajahi semua koleksi pakaian dan aksesoris kami.
           </p>
         </div>
 
@@ -91,7 +89,7 @@ export default function ShopSalePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {loading
-            ? Array.from({ length: 8 }).map((_, i) => (
+            ? Array.from({ length: 12 }).map((_, i) => (
                 <ProductCardSkeleton key={i} />
               ))
             : products.map((product) => (

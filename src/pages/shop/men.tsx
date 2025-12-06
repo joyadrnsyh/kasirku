@@ -16,8 +16,10 @@ interface Product {
 }
 
 const IDR_EXCHANGE_RATE = 15000;
+// Adjusted for Platzi API
+const MEN_CATEGORIES = ["Clothes", "Shoes"];
 
-export default function ShopSalePage() {
+export default function ShopMenPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,11 +33,12 @@ export default function ShopSalePage() {
       setError(null);
       try {
         const data = await productService.getAllProducts();
-        // Filter products with a discount of 15% or more
-        // Platzi API has no discount, just take a slice for demo
-        setProducts(data.slice(10, 22));
+        const menProducts = data.filter((p) =>
+          MEN_CATEGORIES.includes(p.category.name)
+        );
+        setProducts(menProducts);
       } catch (err) {
-        setError("Gagal memuat produk diskon.");
+        setError("Gagal memuat produk pria.");
       } finally {
         setLoading(false);
       }
@@ -74,14 +77,14 @@ export default function ShopSalePage() {
   );
 
   return (
-    <DefaultLayout title="Toko | Diskon">
+    <DefaultLayout title="Toko | Koleksi Pria">
       <section className="px-6 md:px-10 mt-10 mb-20">
         <div className="text-center mb-14">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Penawaran Diskon
+            Koleksi Pria
           </h1>
           <p className="mt-4 text-lg text-neutral-600 max-w-2xl mx-auto">
-            Dapatkan produk favorit Anda dengan harga spesial.
+            Temukan gaya Anda dengan koleksi pakaian dan aksesoris pria terbaru.
           </p>
         </div>
 

@@ -23,11 +23,11 @@ export default function NotFound() {
           href="/"
           className="px-6 py-3 bg-black text-white text-sm tracking-wide uppercase font-semibold hover:bg-neutral-800 transition-all"
         >
-          Kembali ke Home
+          Kembali ke Beranda
         </a>
 
         <a
-          href="/products"
+          href="/shop/sale"
           className="px-6 py-3 border border-black text-black text-sm tracking-wide uppercase font-semibold hover:bg-black hover:text-white transition-all"
         >
           Lihat Produk
@@ -36,7 +36,7 @@ export default function NotFound() {
 
       {/* SMALL FOOTER NOTE */}
       <p className="mt-10 text-xs text-neutral-400 tracking-wide">
-        YOURBAJU.ID — Japanese Minimalist Fashion
+        YOURBAJU.ID — Fashion Minimalis Jepang
       </p>
     </div>
   );

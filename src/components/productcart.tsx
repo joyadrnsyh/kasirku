@@ -85,7 +85,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               onClick={onAddToCart}
               className="w-full bg-black text-white py-2 rounded-md text-sm tracking-wide hover:bg-gray-900 transition"
             >
-              Add to Cart
+              Tambah ke Keranjang
             </button>
           )}
 
@@ -94,7 +94,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               onClick={onBuy}
               className="w-full border border-black text-black py-2 rounded-md text-sm tracking-wide hover:bg-gray-100 transition"
             >
-              Buy Now
+              Beli Sekarang
             </button>
           )}
         </div>

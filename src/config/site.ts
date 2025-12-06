@@ -1,31 +1,31 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "GlowVera",
-  description: "Minimalist fashion e-commerce inspired by Japanese style.",
+  name: "byuheart",
+  description: "E-commerce fashion minimalis yang terinspirasi dari gaya Jepang.",
 
   // ===========================
   // NAVIGATION (DESKTOP)
   // ===========================
   navItems: [
     {
-      label: "Home",
+      label: "Beranda",
       href: "/",
     },
     {
-      label: "Shop",
+      label: "Toko",
       href: "/shop",
       dropdown: [
-        { label: "Men", href: "/shop/men" },
-        { label: "Women", href: "/shop/women" },
-        { label: "Kids", href: "/shop/kids" },
-        { label: "New Arrivals", href: "/shop/new" },
-        { label: "Best Sellers", href: "/shop/bestseller" },
-        { label: "Sale", href: "/shop/sale" },
+        { label: "Pria", href: "/shop/men" },
+        { label: "Wanita", href: "/shop/women" },
+        { label: "Anak", href: "/shop/kids" },
+        { label: "Pendatang Baru", href: "/shop/new" },
+        { label: "Terlaris", href: "/shop/bestseller" },
+        { label: "Diskon", href: "/shop/sale" },
       ],
     },
     {
-      label: "Collections",
+      label: "Koleksi",
       href: "/collections",
       dropdown: [
         { label: "Essentials", href: "/collections/essentials" },
@@ -36,11 +36,11 @@ export const siteConfig = {
       ],
     },
     {
-      label: "About",
+      label: "Tentang Kami",
       href: "/about",
     },
     {
-      label: "Contact",
+      label: "Kontak",
       href: "/contact",
     },
 
@@ -50,16 +50,16 @@ export const siteConfig = {
   // NAVIGATION (MOBILE MENU)
   // ===========================
   navMenuItems: [
-    { label: "Home", href: "/" },
-    { label: "Shop - Men", href: "/shop/men" },
-    { label: "Shop - Women", href: "/shop/women" },
-    { label: "Shop - Kids", href: "/shop/kids" },
-    { label: "New Arrivals", href: "/shop/new" },
-    { label: "Best Sellers", href: "/shop/bestseller" },
-    { label: "Sale", href: "/shop/sale" },
-    { label: "Collections", href: "/collections" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "Beranda", href: "/" },
+    { label: "Toko - Pria", href: "/shop/men" },
+    { label: "Toko - Wanita", href: "/shop/women" },
+    { label: "Toko - Anak", href: "/shop/kids" },
+    { label: "Pendatang Baru", href: "/shop/new" },
+    { label: "Terlaris", href: "/shop/bestseller" },
+    { label: "Diskon", href: "/shop/sale" },
+    { label: "Koleksi", href: "/collections" },
+    { label: "Tentang Kami", href: "/about" },
+    { label: "Kontak", href: "/contact" },
   ],
 
   // ===========================

@@ -9,11 +9,14 @@ export default function AboutPage() {
     <DefaultLayout>
       <div className="min-h-screen bg-white text-black pb-28">
         {/* HERO SECTION */}
-        <section className="w-full text-center py-24 border-b border-neutral-200">
-          <h1 className="text-5xl font-extrabold tracking-tight">ABOUT US</h1>
+        <section className="w-full text-center py-24 border-b border-neutral-200 bg-neutral-50">
+          <h1 className="text-5xl font-extrabold tracking-tight">
+            TENTANG KAMI
+          </h1>
           <p className="text-neutral-600 max-w-2xl mx-auto text-lg mt-4 leading-relaxed">
-            We believe in creating high-quality, comfortable, and modern apparel
-            for everyone. Designed with simplicity. Made with purpose.
+            Kami percaya dalam menciptakan pakaian berkualitas tinggi, nyaman,
+            dan modern untuk semua orang. Didesain dengan kesederhanaan. Dibuat
+            dengan tujuan.
           </p>
         </section>
 
@@ -21,17 +24,18 @@ export default function AboutPage() {
         <section className="max-w-6xl mx-auto mt-24 px-8 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
           {/* TEXT */}
           <div>
-            <h2 className="text-3xl font-extrabold mb-6">OUR STORY</h2>
+            <h2 className="text-3xl font-extrabold mb-6">CERITA KAMI</h2>
             <p className="text-neutral-600 leading-relaxed text-lg">
-              YourBaju.id was created with a vision of bringing timeless and
-              modern fashion to everyday wear. Inspired by Japanese minimalism,
-              every product is crafted to deliver comfort, simplicity, and
-              elegance without compromise.
+              YourBaju.id diciptakan dengan visi untuk membawa mode yang tak
+              lekang oleh waktu dan modern untuk pakaian sehari-hari.
+              Terinspirasi oleh minimalisme Jepang, setiap produk dibuat untuk
+              memberikan kenyamanan, kesederhanaan, dan keanggunan tanpa
+              kompromi.
             </p>
 
             <p className="text-neutral-600 leading-relaxed text-lg mt-5">
-              We believe clothing should empower confidence while remaining
-              accessible and functional for all lifestyles.
+              Kami percaya pakaian harus memberdayakan kepercayaan diri sambil
+              tetap terjangkau dan fungsional untuk semua gaya hidup.
             </p>
           </div>
 
@@ -50,31 +54,31 @@ export default function AboutPage() {
         {/* VALUES SECTION */}
         <section className="max-w-6xl mx-auto mt-32 px-8">
           <h2 className="text-3xl font-extrabold tracking-tight text-center">
-            OUR VALUES
+            NILAI-NILAI KAMI
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-16">
             <div className="text-center">
-              <h3 className="text-xl font-bold tracking-wide">SIMPLICITY</h3>
+              <h3 className="text-xl font-bold tracking-wide">KESEDERHANAAN</h3>
               <p className="text-neutral-600 mt-4 text-sm leading-relaxed">
-                Clean, functional, and essential. We design with intention —
-                nothing more, nothing less.
+                Bersih, fungsional, dan esensial. Kami merancang dengan niat —
+                tidak lebih, tidak kurang.
               </p>
             </div>
 
             <div className="text-center">
-              <h3 className="text-xl font-bold tracking-wide">QUALITY</h3>
+              <h3 className="text-xl font-bold tracking-wide">KUALITAS</h3>
               <p className="text-neutral-600 mt-4 text-sm leading-relaxed">
-                Every product is made with premium materials to ensure comfort
-                and durability.
+                Setiap produk dibuat dengan bahan premium untuk memastikan
+                kenyamanan dan daya tahan.
               </p>
             </div>
 
             <div className="text-center">
-              <h3 className="text-xl font-bold tracking-wide">INNOVATION</h3>
+              <h3 className="text-xl font-bold tracking-wide">INOVASI</h3>
               <p className="text-neutral-600 mt-4 text-sm leading-relaxed">
-                We continuously evolve through new fabrics, modern silhouettes,
-                and better production.
+                Kami terus berkembang melalui kain baru, siluet modern, dan
+                produksi yang lebih baik.
               </p>
             </div>
           </div>
@@ -83,7 +87,7 @@ export default function AboutPage() {
         {/* TEAM SECTION */}
         <section className="max-w-6xl mx-auto mt-32 px-8 text-center">
           <h2 className="text-3xl font-extrabold tracking-tight">
-            MEET OUR TEAM
+            TEMUI TIM KAMI
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-16">
@@ -96,8 +100,8 @@ export default function AboutPage() {
                   alt="Team Member"
                   className="rounded-none border border-neutral-300 object-cover"
                 />
-                <h3 className="font-bold text-lg mt-4">Team Member {i}</h3>
-                <p className="text-neutral-600 text-sm">Designer</p>
+                <h3 className="font-bold text-lg mt-4">Anggota Tim {i}</h3>
+                <p className="text-neutral-600 text-sm">Desainer</p>
               </div>
             ))}
           </div>
@@ -106,11 +110,11 @@ export default function AboutPage() {
         {/* CTA SECTION */}
         <section className="max-w-4xl mx-auto mt-32 px-8 text-center">
           <h2 className="text-3xl font-extrabold tracking-tight">
-            WANT TO KNOW MORE?
+            INGIN TAHU LEBIH BANYAK?
           </h2>
           <p className="text-neutral-600 mt-4 text-lg leading-relaxed">
-            We’re here to help. Explore our products or contact our support
-            team.
+            Kami siap membantu. Jelajahi produk kami atau hubungi tim dukungan
+            kami.
           </p>
 
           <Button
@@ -118,7 +122,7 @@ export default function AboutPage() {
             radius="none"
             className="bg-black text-white font-bold tracking-wide mt-10 px-10 py-7 hover:bg-neutral-800"
           >
-            CONTACT US
+            HUBUNGI KAMI
           </Button>
         </section>
       </div>

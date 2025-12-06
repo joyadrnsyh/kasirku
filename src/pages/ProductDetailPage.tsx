@@ -198,7 +198,7 @@ const ProductDetailPage: React.FC = () => {
 
           <div className="mt-6 text-gray-600 text-sm space-y-1">
             <p>
-              <strong>Brand:</strong> {product.brand}
+              <strong>Merek:</strong> {product.brand}
             </p>
             <p>
               <strong>SKU:</strong> {product.sku}
@@ -207,27 +207,27 @@ const ProductDetailPage: React.FC = () => {
               <strong>Stock:</strong> {product.stock} pcs
             </p>
             <p>
-              <strong>Weight:</strong> {product.weight} g
+              <strong>Berat:</strong> {product.weight} g
             </p>
             <p>
-              <strong>Dimensions:</strong> {product.dimensions.width} x{" "}
+              <strong>Dimensi:</strong> {product.dimensions.width} x{" "}
               {product.dimensions.height} x {product.dimensions.depth} cm
             </p>
             <p>
-              <strong>Warranty:</strong> {product.warrantyInformation}
+              <strong>Garansi:</strong> {product.warrantyInformation}
             </p>
             <p>
-              <strong>Shipping:</strong> {product.shippingInformation}
+              <strong>Pengiriman:</strong> {product.shippingInformation}
             </p>
             <p>
-              <strong>Return Policy:</strong> {product.returnPolicy}
+              <strong>Kebijakan Pengembalian:</strong> {product.returnPolicy}
             </p>
           </div>
 
           {/* QUANTITY & BUTTONS */}
           <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:gap-4">
             <div className="flex items-center gap-3 mb-4 sm:mb-0">
-              <span className="font-medium">Quantity</span>
+              <span className="font-medium">Jumlah</span>
               <button
                 onClick={decrement}
                 className="w-8 h-8 border flex items-center justify-center hover:bg-gray-200 transition"
@@ -247,20 +247,20 @@ const ProductDetailPage: React.FC = () => {
                 onClick={handleAddToCart}
                 className="flex-1 bg-black text-white py-3 rounded-md font-medium hover:bg-gray-900 transition"
               >
-                Add to Cart
+                Tambah ke Keranjang
               </button>
               <button
                 onClick={handleBuyNow}
                 className="flex-1 border border-black text-black py-3 rounded-md font-medium hover:bg-gray-100 transition"
               >
-                Buy Now
+                Beli Sekarang
               </button>
             </div>
           </div>
 
           {/* REVIEWS */}
           <div className="mt-10">
-            <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
+            <h2 className="text-2xl font-bold mb-4">Ulasan Pelanggan</h2>
             {product.reviews?.length ? (
               product.reviews.map((review, idx) => (
                 <div

@@ -17,7 +17,7 @@ interface Product {
 
 const IDR_EXCHANGE_RATE = 15000;
 
-export default function ShopSalePage() {
+export default function ShopBestsellerPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,11 +31,12 @@ export default function ShopSalePage() {
       setError(null);
       try {
         const data = await productService.getAllProducts();
-        // Filter products with a discount of 15% or more
-        // Platzi API has no discount, just take a slice for demo
-        setProducts(data.slice(10, 22));
+        // Sort by rating descending and take top 12
+        // Platzi API has no rating, just take first 12 as a demo
+        const bestSellers = data.slice(0, 12);
+        setProducts(bestSellers);
       } catch (err) {
-        setError("Gagal memuat produk diskon.");
+        setError("Gagal memuat produk terlaris.");
       } finally {
         setLoading(false);
       }
@@ -74,14 +75,14 @@ export default function ShopSalePage() {
   );
 
   return (
-    <DefaultLayout title="Toko | Diskon">
+    <DefaultLayout title="Toko | Produk Terlaris">
       <section className="px-6 md:px-10 mt-10 mb-20">
         <div className="text-center mb-14">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Penawaran Diskon
+            Produk Terlaris
           </h1>
           <p className="mt-4 text-lg text-neutral-600 max-w-2xl mx-auto">
-            Dapatkan produk favorit Anda dengan harga spesial.
+            Koleksi produk yang paling disukai oleh pelanggan kami.
           </p>
         </div>
 
@@ -102,7 +103,7 @@ export default function ShopSalePage() {
                   subtitle={product.category.name}
                   imageSrc={product.images[0] || "/image/default.png"}
                   price={Math.round(product.price * IDR_EXCHANGE_RATE)}
-                  rating={4.5} // Hardcoded rating
+                  rating={4.5} // Hardcoded rating as API doesn't provide it
                   onAddToCart={() => handleAddToCart(product)}
                   onBuy={() => handleBuy(product)}
                 />

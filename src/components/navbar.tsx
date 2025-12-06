@@ -41,7 +41,7 @@ export const Navbar = () => {
         inputWrapper: "bg-neutral-100 border border-neutral-300 shadow-none",
         input: "text-sm",
       }}
-      placeholder="Search..."
+      placeholder="Cari..."
       startContent={
         <SearchIcon className="text-base text-neutral-500 pointer-events-none" />
       }
@@ -62,7 +62,7 @@ export const Navbar = () => {
             href="/"
             className="font-extrabold text-2xl tracking-tight text-black"
           >
-            byuheart.
+            byuheart
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -184,7 +184,7 @@ export const Navbar = () => {
         <NavbarMenuItem>
           <Link href="/cart" className="relative flex items-center gap-2">
             <ShoppingCart size={20} />
-            <span>Cart</span>
+            <span>Keranjang</span>
             {totalCartItems > 0 && (
               <span className="ml-1 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
                 {totalCartItems}

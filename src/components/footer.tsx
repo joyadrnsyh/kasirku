@@ -13,9 +13,9 @@ const Footer = () => {
             YOURBAJU.ID
           </h2>
           <p className="text-stone-400 leading-relaxed text-sm">
-            Premium fashion with minimalist Japanese aesthetic.
+            Fashion premium dengan estetika minimalis Jepang.
             <br />
-            Modern • Comfortable • Essential
+            Modern • Nyaman • Esensial
           </p>
 
           {/* SOCIAL MEDIA */}
@@ -37,26 +37,26 @@ const Footer = () => {
 
         {/* SHOP */}
         <div>
-          <h3 className="text-white text-lg font-semibold mb-4">Shop</h3>
+          <h3 className="text-white text-lg font-semibold mb-4">Toko</h3>
           <ul className="space-y-2 text-sm">
             <li>
               <Link className="text-stone-400 hover:text-white" href="#">
-                Men
+                Pria
               </Link>
             </li>
             <li>
               <Link className="text-stone-400 hover:text-white" href="#">
-                Women
+                Wanita
               </Link>
             </li>
             <li>
               <Link className="text-stone-400 hover:text-white" href="#">
-                New Arrival
+                Pendatang Baru
               </Link>
             </li>
             <li>
               <Link className="text-stone-400 hover:text-white" href="#">
-                Sale
+                Diskon
               </Link>
             </li>
           </ul>
@@ -64,26 +64,26 @@ const Footer = () => {
 
         {/* COMPANY */}
         <div>
-          <h3 className="text-white text-lg font-semibold mb-4">Company</h3>
+          <h3 className="text-white text-lg font-semibold mb-4">Perusahaan</h3>
           <ul className="space-y-2 text-sm">
             <li>
               <Link className="text-stone-400 hover:text-white" href="#">
-                About Us
+                Tentang Kami
               </Link>
             </li>
             <li>
               <Link className="text-stone-400 hover:text-white" href="#">
-                Contact
+                Kontak
               </Link>
             </li>
             <li>
               <Link className="text-stone-400 hover:text-white" href="#">
-                Careers
+                Karir
               </Link>
             </li>
             <li>
               <Link className="text-stone-400 hover:text-white" href="#">
-                Privacy Policy
+                Kebijakan Privasi
               </Link>
             </li>
           </ul>
@@ -92,20 +92,20 @@ const Footer = () => {
         {/* NEWSLETTER */}
         <div>
           <h3 className="text-white text-lg font-semibold mb-4">
-            Join Newsletter
+            Langganan Newsletter
           </h3>
           <p className="text-stone-400 mb-4 text-sm">
-            Get updates for new arrivals and exclusive offers.
+            Dapatkan info produk baru dan penawaran eksklusif.
           </p>
 
           <div className="flex items-center gap-3">
             <Input
-              placeholder="Your email address"
+              placeholder="Alamat email Anda"
               className="bg-white text-black rounded-lg"
               type="email"
             />
             <Button className="bg-stone-700 text-white hover:bg-stone-600 rounded-lg px-6">
-              Join
+              Ikuti
             </Button>
           </div>
         </div>
@@ -113,7 +113,7 @@ const Footer = () => {
 
       {/* COPYRIGHT */}
       <div className="text-center text-stone-500 text-sm mt-16 border-t border-stone-800 pt-6">
-        © {new Date().getFullYear()} Glowvera. All rights reserved.
+        © {new Date().getFullYear()} Glowvera. Hak cipta dilindungi.
       </div>
     </footer>
   );

@@ -8,10 +8,13 @@ export default function ContactPage() {
     <DefaultLayout>
       <div className="min-h-screen bg-white text-black pb-28">
         {/* HEADER SECTION */}
-        <section className="w-full text-center py-20 border-b border-neutral-200">
-          <h1 className="text-5xl font-extrabold tracking-tight">CONTACT</h1>
+        <section className="w-full text-center py-20 border-b border-neutral-200 bg-neutral-50">
+          <h1 className="text-5xl font-extrabold tracking-tight">
+            KONTAK KAMI
+          </h1>
           <p className="text-neutral-600 mt-4 text-lg max-w-xl mx-auto leading-relaxed">
-            Reach out to us for support, collaboration, or product inquiries.
+            Hubungi kami untuk dukungan, kolaborasi, atau pertanyaan seputar
+            produk.
           </p>
         </section>
 
@@ -31,22 +34,23 @@ export default function ContactPage() {
 
           <div className="flex flex-col items-center text-center gap-3">
             <MapPin size={40} className="text-black" />
-            <h3 className="text-lg font-bold tracking-wide">ADDRESS</h3>
-            <p className="text-neutral-600 text-sm">Sleman, Yogyakarta</p>
+            <h3 className="text-lg font-bold tracking-wide">ALAMAT</h3>
+            <p className="text-neutral-600 text-sm">
+              Sleman, Yogyakarta, Indonesia
+            </p>
           </div>
         </section>
 
         {/* FORM SECTION */}
         <section className="max-w-2xl mx-auto mt-24 px-8">
           <h2 className="text-3xl font-extrabold text-center tracking-tight">
-            SEND US A MESSAGE
+            KIRIM KAMI PESAN
           </h2>
 
           <form className="grid grid-cols-1 gap-8 mt-12">
             <Input
               size="lg"
-              label="Full Name"
-              radius="none"
+              label="Nama Lengkap"
               classNames={{
                 inputWrapper: "border-b border-neutral-300 rounded-none",
               }}
@@ -64,7 +68,7 @@ export default function ContactPage() {
 
             <Input
               size="lg"
-              label="Phone / WhatsApp"
+              label="Telepon / WhatsApp"
               radius="none"
               classNames={{
                 inputWrapper: "border-b border-neutral-300 rounded-none",
@@ -73,7 +77,7 @@ export default function ContactPage() {
 
             <Textarea
               minRows={5}
-              label="Message"
+              label="Pesan"
               radius="none"
               classNames={{
                 inputWrapper: "border-b border-neutral-300 rounded-none",
@@ -85,7 +89,7 @@ export default function ContactPage() {
               radius="none"
               className="bg-black text-white font-bold tracking-wide py-7 hover:bg-neutral-800"
             >
-              SEND MESSAGE
+              KIRIM PESAN
             </Button>
           </form>
         </section>
@@ -93,7 +97,7 @@ export default function ContactPage() {
         {/* MAP */}
         <section className="max-w-5xl mx-auto mt-24 px-8">
           <h2 className="text-3xl font-extrabold tracking-tight text-center">
-            OUR LOCATION
+            LOKASI KAMI
           </h2>
 
           <div className="w-full h-[400px] mt-10 border border-neutral-300">

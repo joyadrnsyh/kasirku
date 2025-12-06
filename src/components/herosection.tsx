@@ -11,24 +11,28 @@ const heroImages = [
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="relative flex flex-col md:flex-row items-center justify-between 
+    <section
+      className="relative flex flex-col md:flex-row items-center justify-between 
       bg-white border border-neutral-200 rounded-2xl 
-      px-12 md:px-20 py-16 gap-12 shadow-sm">
-
+      px-12 md:px-20 py-16 gap-12 shadow-sm"
+    >
       {/* LEFT TEXT */}
       <div className="max-w-xl">
         <p className="text-neutral-500 tracking-[0.25em] text-xs uppercase mb-4">
-          新しいコレクション — New Collection
+          新しいコレクション — Koleksi Terbaru
         </p>
 
         <h1 className="text-4xl md:text-6xl font-semibold leading-tight text-neutral-900">
-          Simple.
-          <br />Clean.
-          <br /><span className="font-bold">Essential Wear.</span>
+          Sederhana.
+          <br />
+          Bersih.
+          <br />
+          <span className="font-bold">Pakaian Esensial.</span>
         </h1>
 
         <p className="mt-6 text-neutral-600 text-lg leading-relaxed max-w-md">
-          Pakaian esensial harian yang mengutamakan kenyamanan, fungsi, dan desain minimalis.
+          Pakaian esensial harian yang mengutamakan kenyamanan, fungsi, dan
+          desain minimalis.
         </p>
 
         <Button
@@ -36,7 +40,7 @@ const HeroSection: React.FC = () => {
             bg-red-600 text-white hover:bg-red-700 
             transition-all font-medium tracking-wide"
         >
-          Shop Now
+          Belanja Sekarang
         </Button>
       </div>
 

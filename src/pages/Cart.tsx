@@ -34,14 +34,13 @@ export default function CartPage() {
           <p className="text-gray-600 mt-1">
             Rp {item.price.toLocaleString("id-ID")}
           </p>
-          <p className="text-gray-500 mt-1">Qty: {item.qty}</p>
         </div>
         <div className="col-span-4 flex justify-end items-center gap-4">
           <button
             onClick={() => removeFromCart(item.id)}
-            className="text-red-600 hover:text-red-800 transition"
+            className="text-red-600 hover:text-red-800 transition text-sm"
           >
-            Remove
+            Hapus
           </button>
         </div>
       </div>
@@ -49,7 +48,12 @@ export default function CartPage() {
 
   const renderOrderItems = (orders: Order[], showCompleteBtn = false) =>
     orders.length === 0 ? (
-      <p className="text-center text-gray-500 mt-6">Tidak ada pesanan.</p>
+      <>
+        <p className="text-center text-gray-500 mt-6">Tidak ada pesanan.</p>
+        <p className="text-center text-gray-500 mt-6">
+          Belum ada pesanan di tab ini.
+        </p>
+      </>
     ) : (
       orders.map((order) => (
         <div key={order.id} className="border-b py-6 space-y-4">
@@ -94,7 +98,7 @@ export default function CartPage() {
                 onClick={() => markOrderCompleted(order.id)}
                 className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
               >
-                Mark as Completed
+                Mark as Completed Tandai Selesai
               </button>
             </div>
           )}
@@ -106,7 +110,7 @@ export default function CartPage() {
     <DefaultLayout>
       <div className="max-w-5xl mx-auto py-16 px-6">
         <h1 className="text-4xl font-bold mb-10 text-center tracking-tight">
-          Shopping Cart
+          Keranjang Belanja
         </h1>
 
         {/* Tabs */}
@@ -163,7 +167,7 @@ export default function CartPage() {
                     onClick={() => navigate("/checkout")}
                     className="bg-black text-white px-8 py-3 font-medium text-lg hover:bg-gray-800 transition rounded-sm"
                   >
-                    Checkout
+                    Lanjut ke Pembayaran
                   </button>
                 </div>
               </div>

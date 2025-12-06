@@ -61,7 +61,7 @@ export const Chatbot: React.FC = () => {
         <div className="mt-3 w-96 h-[500px] bg-white border border-gray-200 rounded-xl shadow-2xl flex flex-col overflow-hidden font-sans">
           {/* Header */}
           <div className="bg-black p-3 text-white font-bold text-sm flex justify-between items-center">
-            <span>Gemini Assistant</span>
+            <span>Asisten Gemini</span>
             <button
               onClick={() => setIsOpen(false)}
               className="text-white font-bold text-lg hover:text-gray-300"
@@ -92,7 +92,7 @@ export const Chatbot: React.FC = () => {
             {loading && (
               <div className="flex justify-start">
                 <div className="bg-gray-200 text-gray-500 text-xs p-2 rounded-lg animate-pulse">
-                  Sedang mengetik...
+                  Mengetik...
                 </div>
               </div>
             )}
@@ -107,7 +107,7 @@ export const Chatbot: React.FC = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder="Tanya sesuatu..."
+              placeholder="Tanyakan sesuatu..."
               disabled={loading}
             />
             <button

@@ -5,6 +5,7 @@ import productService from "@/services/productService";
 import { useEffect, useState, useContext } from "react";
 import { addToast } from "@heroui/toast";
 import { CartContext } from "@/context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -23,6 +24,7 @@ export default function IndexPage() {
   const [error, setError] = useState<string | null>(null);
 
   const { addToCart } = useContext(CartContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -66,13 +68,25 @@ export default function IndexPage() {
     });
   };
 
-  const handleBuy = (title: string) => {
+  const handleBuy = (product: Product) => {
+    // Tambahkan ke keranjang
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: Math.round(product.price * IDR_EXCHANGE_RATE),
+      images: product.images,
+    });
+
+    // Tampilkan toast
     addToast({
-      title: "Pembelian Berhasil 🎉",
-      description: `Produk ${title} telah diproses.`,
+      title: "Pembelian 🎉",
+      description: `Produk ${product.title} telah ditambahkan dan menuju Checkout.`,
       variant: "flat",
       color: "success",
     });
+
+    // Redirect ke checkout
+    navigate("/checkout");
   };
 
   const recommendedProducts = products.slice(0, 3);
@@ -93,7 +107,7 @@ export default function IndexPage() {
         price={Math.round(product.price * IDR_EXCHANGE_RATE)}
         rating={4.5}
         onAddToCart={() => handleAddToCart(product)}
-        onBuy={() => handleBuy(product.title)}
+        onBuy={() => handleBuy(product)}
       />
     ));
 
@@ -106,7 +120,7 @@ export default function IndexPage() {
       {/* RECOMMENDED */}
       <section className="mt-28 px-6 md:px-10">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-14 tracking-tight">
-          RECOMMENDED FOR YOU
+          REKOMENDASI UNTUK ANDA
         </h1>
 
         {error && (
@@ -125,7 +139,7 @@ export default function IndexPage() {
       {/* SPECIAL OFFERS */}
       <section className="mt-32 px-6 md:px-10 mb-24">
         <h2 className="text-4xl font-bold text-center mb-14 tracking-tight">
-          SPECIAL OFFERS
+          PENAWARAN SPESIAL
         </h2>
 
         {error && (
