@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "public"  # Plugin Next.js akan override folder ini
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "20"  # optional, untuk stabilitas Node
